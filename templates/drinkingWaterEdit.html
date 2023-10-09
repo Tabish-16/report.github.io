@@ -1,0 +1,881 @@
+<!doctype html>
+<html>
+<head>
+    
+    {%load static%}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/db212db5f7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href={%static "style.css"%}>
+
+  <title>Add drinking Water Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  
+  <style>
+    .NEQS,.PEQS{
+    display: none;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        .side-nav {
+            width: 100%; /* Make the navigation full width */
+            left: -100%; /* Hide it off-screen by default */
+            transition: left 0.3s ease;
+            font-size:15px;
+        }
+    
+        .side-nav.show {
+            left: 0; /* Show the navigation on smaller screens */
+        }
+    }
+    
+    /* Add a hamburger menu icon for mobile */
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        .menu-toggle {
+            display: block; /* Show the toggle button on small screens */
+        }
+    
+        .menu-toggle a {
+            cursor: pointer;
+        }
+    }
+    
+    /* You can style the hamburger icon as you like */
+    .menu-toggle i {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+    
+    /* Add this CSS to make the submenus visible on mobile */
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        .sub-menu.show {
+            display: block;
+        }
+    }
+</style>
+  
+</head>
+<body>
+    
+<section id="header"  class="h-20 w-full bg-gray-900 flex flex-wrap items-center justify-between p-4 fixed top-0">
+    <a href="{% url "home" %}"><img class="h-14 ml-10" src={% static '/assets/logo-light.png'%} alt="image"></a>
+    
+        <div id="profile" class="flex space-x-10 mr-10">
+            <span class="text-gray-200 text-xl flex gap-2">User : <p class="text-green-400">{{user.username}}</p></span>
+            <a href="{% url 'logout'  %}" class="w-24 mt-1  text-gray-200"><i class="fa-solid fa-power-off pr-2 text-red-400"></i>Logout</a>
+        </div>
+</section>
+
+
+<section class="main w-full flex flex-row justify-end ">
+    
+        <nav class="side-nav list-none w-72 bg-gray-900 text-gray-100 h-full flex flex-col items-center fixed  top-22 left-0 overflow-x-hidden mt-20" >
+            <hr class="border border-gray-100 w-full">
+            <h1 class="text-2xl pb-10 pt-4 text-gray-100 font-bold text-center">SITE NAVIGATION</h1>
+                <ul class="w-48 ">
+                   
+
+                    
+                        <button class="sideNavFormBtn mb-2"><i class="fa-regular fa-pen-to-square pr-4"></i>Forms.<i class="fa-solid fa-chevron-right pl-20"></i></button>
+                        <div class="formMainDiv hidden">
+                            <hr class=" border-blue-200">
+                                <button class="DWaterBtn ml-2 pb-2"><i class="fa-solid fa-ellipsis-vertical mr-2"></i>Drinking Water</button>
+                                <div class="DWaterDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li ><a class="addDrinkFormBtn" href="/drinkingWaterForm"></i>Add Drinking Water</a></li>
+                                    <li ><a class="ListDrinkBtn" href="/drinkingWaterList"></i>List Drinking Water</a></li>
+                                
+                                </div>  
+                            
+                                <hr class=" border-blue-200">
+                                <ul class="">
+                                    <button class="gasEmBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Gaseous Emission</button>
+                                    <div class="gasEmDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="addGaseousFormBtn" href="/gaseousEmission">Add Gaseous Emis</a></li>
+                                    <li><a class="addGaseousListBtn" href="/gaseousEmissionList">List Gaseous Emis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ambientBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Ambienty Air Quality</button>
+                                    <div class="ambDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="ambientAirFormBtn" href="/ambientAir">Add Ambienty Air Qua..</a></li>
+                                    <li><a class="ambientAirList" href="/ambientAirList">List Ambienty Air Qua..</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                            
+                                <ul>
+                                    <button class="wasteWaterBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Waste Water Sludge</button>
+                                    <div class="wasteWaterDiv hidden text-blue-100 pl-6 space-y-2 ">
+                                    <li><a class="wasteWatewrSludgeBtn" href="/wasteWaterSludge">Add Waste Water Slu.</a></li>
+                                    <li><a class="wasteWaterSludgeListBtn" href="/wasteWaterSludgeList">List Waste Water Slu.</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="vehicEmBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Vehicular Emission</button>
+                                    <div class="vehicEmDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="vehicularEmisFormBtn" href="/vehicularEmission">Add Vehicular Emission</a></li>
+                                    <li><a class="vehicularemisListBtn" href="/vehicularEmissionList">List Vehicular Emission</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="luxBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Lux Analysis</button>
+                                    <div class="luxDiv text-blue-100 hidden pl-6 space-y-2">
+                                    <li><a class="luxAnalysisFormBtn" href="/luxAnalysis">Add Lux Analysis</a></li>
+                                    <li><a class="luxAnalysisListBtn" href="/luxAnalysisList">List Lux Analysis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="noiseBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Noise Analysis</button>
+                                <div class="noiseDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="noiseAnalysisFormBtn" href="/noiseAnalysis">Add Noise Analysis</a></li>
+                                    <li><a class="noiseAnalysisListBtn" href="/noiseAnalysisList">List Noise Analysis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ppbagBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Packing Poly Bag</button>
+                                <div class="ppbagDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="packingPolyFormBtn" href="/packingPolyBag">Add Packing Poly Bag</a></li>
+                                    <li><a class="packingPolyListBtn" href="/packingPolyBagList">List Packing Poly Bag</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <div class="">
+                                    <button class="machineOilBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Machine Oil</button>
+                                   <div class="machineOilDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="machineOilFormBtn" href="/machineOil">Add Machine Oil</a></li>
+                                    <li><a class="machineOilListBtn" href="/machineOilList">List Machine Oil</a></li>
+                                   </div>
+                                </div>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="microBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Microbial Analysis</button>
+                                    <div class="microDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="microbialFormBtn" href="/microbialAnalysis">Add Microbial Analysis</a></li>
+                                    <li><a class="microbialListBtn" href="/microbialList">List Microbial Analysis</a></li>
+                                    </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="viscBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Viscous Liquid</button>
+                                <div class="viscDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="viscousLiquidFormBtn" href="/viscousLiquid">Add Viscous Liquid</a></li>
+                                    <li><a class="viscousLiquidListBtn" href="/viscousLiquidList">List Viscous Liquid</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ambientAirBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Ambient Air Quality 2</button>
+                                <div class="ambientAirDiv hidden text-blue-100 pl-6 space-y-2" >
+                                    <li><a class="ambientAir2FormBtn" href="/ambientAirQuality2">Add Ambient Air 2</a></li>
+                                    <li><a class="ambientAir2ListBtn" href="/ambientAir2List">List Ambient Air 2</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="waterwastebtn2 pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Waste Water2</button>
+                                <div class="waterwastediv2 hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="wasteWater2FormBtn" href="/wasteWater2">Add Waste Water2</a></li>
+                                    <li><a class="wasteWater2ListBtn" href="/wasteWater2List">List Waste Water2</a></li>
+                                </div>
+                                </ul>
+                        </div>
+                            
+                        
+                        </ul>
+                        
+                    
+                    
+                        
+
+                
+            
+        </nav>
+        {% block content %}
+        
+        <div class="drinkingwaterform h-full w-10/12 flex flex-col items-center  bg-blueGray-600" >
+            
+            {% if list %}
+            
+            <form action="{% url 'DrinkingWaterform-editRecord' pk=list.id %}" method="post" enctype="multipart/form-data" class="drink-water-form flex flex-col justify-around w-11/12 mt-10 flex-wrap">
+                {% csrf_token %}
+                <h1 class="text-center mt-10 text-3xl py-16">Drinking Water Form</h1>
+                <div class="alert w-10/12 flex flex-col justify-around my-6">
+                    
+                    <div class="">
+                       
+                        <p style="display: flex;">Filling Report For? <img id="loc_err" style="overflow: hidden;height: 50px;width:50px;margin-top:-12px;" src={% static '/assets/loader.gif'%}/></p>
+                    </div>
+                    <div class="">
+                        <input class="SEQS-value" type="checkbox" value="SEQS">
+                        <label for="">SEQS</label>
+                    </div>
+                    <div class="">
+                        <input class="PEQS-value" type="checkbox" value="PEQS">
+                        <label for="">PEQS</label>
+                    </div>
+                    <div class="">
+                        <input class="NEQS-value" type="checkbox" value="NEQS">
+                        <label for="">NEQS</label>
+                    </div>
+
+                </div>
+                <input id="checkinput" type="text" name="location" value="" style="display: none;">
+                <div class="dwf flex justify-between flex-wrap">
+                    <div class="drink-water-form-1st-input flex flex-col flex-wrap">
+                        <label class="font-bold text-lg" for="">Lab Report No</label>
+                        <input class="date border-2 border-black p-2 h-10 w-96 rounded text-lg" name="lab_report_no" type="text" value="{{list.lab_report_no}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Invoice Bill No</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="invoice_bill_no" type="text" value="{{list.invoice_bill_no}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Reporting Date</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="reporting_date" type="text" value="{{list.reporting_date}}">
+                    </div>
+                </div>
+                <hr class="broder border-black mt-10">
+        
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Report To :</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="reporting_to" style="width: 35rem;" type="text" value="{{list.report_to}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Address</label>
+                        <input class=" border-2 border-black p-2 h-10 rounded text-lg" name="address" style="width: 35rem;" type="text" value="{{list.address}}">
+                    </div>
+                    
+                    
+                </div>
+        
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Attention</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="attention" style="width: 35rem;" type="text" value="{{list.attention}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Email</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="email" style="width: 35rem;" type="email" value="{{list.email}}">
+                    </div>
+                </div>
+        
+                <hr class="broder border-black mt-10">
+        
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample ID</label>
+                        <input id="date" class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_id" style="width: 24rem;" type="text" value="{{list.sample_id}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Collection Date</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="collection_date" style="width: 24rem;" type="date" value="{{list.sample_collection_date}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Description</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_description" style="width: 24rem;" type="text" value="{{list.sample_description}}">
+                    </div>
+                </div>
+        
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Type</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_type" style="width: 24rem;" type="text" value="{{list.sample_type}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Collected By</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_collected_by" style="width: 24rem;" type="text" value="{{list.sample_collected_by}}">
+                    </div>
+                    <div class="flex flex-col ">
+                        <label class="font-bold text-lg" for="">Date of Analysis From</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="date_of_analysis_from" style="width: 24rem;" type="text" value="{{list.date_of_analysis_from}}">
+                    </div>
+                </div>
+        
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Date of Analysis To</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="date_of_analysis_to" style="width: 35rem;" type="text" value="{{list.date_of_analysis_to}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Test Description</label>
+                        <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" name="test_description" style="width: 35rem;" type="text" value="{{list.test_description}}">
+                    </div>
+                    
+                </div>
+                <hr class="broder border-black mt-10">
+        
+        
+        
+                <div class="w-full flex flex-col justify-center">
+                    <table id="" class=" water-form-table border-collapse border-2 border-gray-700 mt-10 " cellspacing="15">
+                        <thead>
+                            <tr>
+                                <th>Sr.#</th>
+                                <th>Parameter/Analytes Description</th>
+                                <th>Methods</th>
+                                <th>Unit</th>
+                                <th>Test Result</th>
+                                <th><select class="h-8 text-center w-36 font-bold" name="water-select">        
+                                    <option value="SEQS">SEQS Limits</option>
+                                    <option value="PEQS">Peqs Limits</option>
+                                    <option value="NEQS">NEQS Limits</option>
+                                    
+                               </select></th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr class="text-center border h-16">
+                                <td>01</td>
+                                <td>pH @ 25°C</td>
+                                <td>*APHA 4500 H</td>
+                                <td>-</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr1" type="text" value="{{list.water_sr1}}"></td>
+                                <td>6.5 - 8.5</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>02</td>
+                                <td>Total Dissolved Solids (TDS)</td>
+                                <td>*APHA 2540-C</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr2" type="text" value="{{list.water_sr2}}"></td>
+                                <td> <1000 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>03</td>
+                                <td>Total Hardness as CaCO3</td>
+                                <td>ASTM D 1126</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr3" type="text" value="{{list.water_sr3}}"></td>
+                                <td> <500 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>04</td>
+                                <td>Color</td>
+                                <td>HACH 8025</td>
+                                <td>TCU</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr4" type="text" value="{{list.water_sr4}}"></td>
+                                <td> ≤ 15 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>05</td>
+                                <td>Turbidity</td>
+                                <td>*APHA 2130</td>
+                                <td>NTU</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr5" type="text" value="{{list.water_sr5}}"></td>
+                                <td> ≤ 5 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>06</td>
+                                <td>Nitrite (NO₂)</td>
+                                <td>HACH 8507</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr6" type="text" value="{{list.water_sr6}}"></td>
+                                <td> ≤ 3 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>07</td>
+                                <td>Nitrate (NO3)</td>
+                                <td>HACH 8507</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr7" type="text" value="{{list.water_sr7}}"></td>
+                                <td> ≤ 0.5 </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>08</td>
+                                <td>Taste</td>
+                                <td>*APHA 2160</td>
+                                <td>-</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr8" type="text" value="{{list.water_sr8}}"></td>
+                                <td> Non-Objectionable </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>09</td>
+                                <td>Odor</td>
+                                <td>*APHA 2150</td>
+                                <td>-</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr9" type="text" value="{{list.water_sr9}}"></td>
+                                <td> Non-Objectionable </td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>10</td>
+                                <td>Chloride (Cl)</td>
+                                <td>*APHA 4500 Cl</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr10" type="text" value="{{list.water_sr10}}"></td>
+                                <td> ≤ 250</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>11</td>
+                                <td>Fluoride (F)</td>
+                                <td>HACH 8029</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr11" type="text" value="{{list.water_sr11}}"></td>
+                                <td> ≤ 1.5</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>12</td>
+                                <td>Aluminum (Al)</td>
+                                <td>*APHA 3111-D</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr12" type="text" value="{{list.water_sr12}}"></td>
+                                <td> ≤ 0.2</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>13</td>
+                                <td>Nickel (Ni)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr13" type="text" value="{{list.water_sr13}}"></td>
+                                <td> ≤ 0.02</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>14</td>
+                                <td>Lead (Pb)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr14" type="text" value="{{list.water_sr14}}"></td>
+                                <td> ≤ 0.05</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>15</td>
+                                <td>Barium (Ba)</td>
+                                <td>HACH 8014</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr15" type="text" value="{{list.water_sr15}}"></td>
+                                <td> ≤ 0.7</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>16</td>
+                                <td>Antimony (Sb)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr16" type="text" value="{{list.water_sr16}}"></td>
+                                <td> ≤ 0.005</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>17</td>
+                                <td>Arsenic (As)</td>
+                                <td>*APHA 3114-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr17" type="text" value="{{list.water_sr17}}"></td>
+                                <td> ≤ 0.05</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>18</td>
+                                <td>Boron (B)</td>
+                                <td>HACH 8015</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr18" type="text" value="{{list.water_sr18}}"></td>
+                                <td> 0.3</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>19</td>
+                                <td>Cadmium (Cd)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr19" type="text" value="{{list.water_sr19}}"></td>
+                                <td>0.01</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>20</td>
+                                <td>Chromium (Cr)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr20" type="text" value="{{list.water_sr20}}"></td>
+                                <td>≤ 0.05</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>21</td>
+                                <td>Selenium (Se)</td>
+                                <td>*APHA 3114-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr21" type="text" value="{{list.water_sr21}}"></td>
+                                <td>0.01</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>22</td>
+                                <td>Copper (Cu)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr22" type="text" value="{{list.water_sr22}}"></td>
+                                <td>2</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>23</td>
+                                <td>HACH 8027</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr23" type="text" value="{{list.water_sr23}}"></td>
+                                <td>≤ 0.05</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>24</td>
+                                <td>Mercury (Hg)</td>
+                                <td>*APHA 3112-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr24"  type="text" value="{{list.water_sr24}}"></td>
+                                <td>≤ 0.001</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>25</td>
+                                <td>Manganese (Mn)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr25" type="text" value="{{list.water_sr25}}"></td>
+                                <td>≤ 0.5</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>26</td>
+                                <td>Zinc (Zn)</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr26" type="text" value="{{list.water_sr26}}"></td>
+                                <td>≤ 5.0</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>27</td>
+                                <td>Residual Chlorine</td>
+                                <td>HACH 10069</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr27" type="text" value="{{list.water_sr27}}"></td>
+                                <td>0.2 - 0.5</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>28</td>
+                                <td>PhenolicCompounds as Phenols</td>
+                                <td>ASTM-D-1783</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr28" type="text" value="{{list.water_sr28}}"></td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>29</td>
+                                <td>Fecal Coliform</td>
+                                <td>USEPA 1604</td>
+                                <td>CFU/100 ml</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr29" type="text" value="{{list.water_sr29}}"></td>
+                                <td>0 CFU/100 ml</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>30</td>
+                                <td>Total Coliform</td>
+                                <td>*APHA 922 B</td>
+                                <td>CFU/100 ml</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr30" type="text" value="{{list.water_sr30}}"></td>
+                                <td>0 CFU/100 ml</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>31</td>
+                                <td>E-Coli</td>
+                                <td>USEPA 1604</td>
+                                <td>CFU/100 ml</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr31" type="text" value="{{list.water_sr31}}"></td>
+                                <td>0 CFU/100 ml</td>
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>32</td>
+                                <td>Pesticides</td>
+                                <td>USEPA-614.1</td>
+                                <td>mg/L</td>
+                                <td><input class=" border-2 border-black w-72" name="water_sr32" type="text" value="{{list.water_sr32}}"></td>
+                                <td>-</td>
+                            </tr>
+        
+                        </tbody>
+                    </table>
+        
+                    <hr class="broder border-black mt-10">
+        
+                    <div class="flex justify-between mt-4">
+                        <div class="flex flex-col">
+                            <label class="font-bold text-lg" for="">Conclusion</label>
+                            <textarea class="border-2 border-black w-96 rounded " name="water-conclusion" id="" cols="30" rows="3" value="{{list.conclusion}}"></textarea>
+                        </div>
+                            
+                    </div>
+        
+                    <h2 class="py-2 font-bold">LEGENDS</h2>
+                    
+                        
+                    <div class="legends w-full flex flex-col space-y-10 border-2 border-gray-200 p-8 mt-10">
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-1" value="{{list.legend_1}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-2" value="{{list.legend_2}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-3" value="{{list.legend_3}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-4" value="{{list.legend_4}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-5" value="{{list.legend_5}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-6" value="{{list.legend_6}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-7" value="{{list.legend_7}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-8" value="{{list.legend_8}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-9" value="{{list.legend_9}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-10" value="{{list.legend_10}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-11" value="{{list.legend_11}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-12" value="{{list.legend_12}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-13" value="{{list.legend_13}}">    
+                        <input class=" h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend-14" value="{{list.legend_14}}">    
+                    </div>
+        
+                            <div class="flex flex-col justify-between mt-6">
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Edit Note</label>
+                                    <input class=" border-2 border-black p-2 h-10 rounded text-lg" name="edit-note" style="width: 79rem;" type="text" value="{{list.edit_note}}" >
+                                </div>
+                                <div class="flex flex-col mt-4">
+                                    <label class="font-bold text-lg" for="">Custom Legend (if any):</label>
+                                    <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" style="width: 35rem;" name="custom-legend" type="text" value="{{list.custom_legend}}">
+                                </div>
+                                
+                            </div>
+        
+                            <div class="flex justify-between mt-6">
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for=""> Doc. Controller 1:</label>
+                                    <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" type="text" name="doc-con-1" value="{{list.doc_controll_1}}">
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Doc. Controller 2:</label>
+                                    <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" type="text" name="doc-con-2" value="{{list.doc_controll_2}}">
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Doc. Controller 3:</label>
+                                    <input class=" border-2 border-black p-2 h-10 w-96 rounded text-lg" type="text" name="doc-con-3" value="{{list.doc_controll_3}}">
+                                </div>
+                            </div>
+
+                            <hr class="broder border-black mt-10">
+                                        
+                            <div class="flex justify-between mt-6 text-sm">
+                                <div class="flex flex-col space-y-4 border p-2  border-black">
+                                    <label class="font-bold text-lg" for=""> Analyzed By (Analyst):</label>
+                                    
+                                    <input id="analyzedBy_btn" class="  pt-4  text-lg"  type="file" accept="image/*" name="analyzedby" value="{{list.analyzedby}}">
+                                </div>
+                                <div class="flex flex-col space-y-4 border p-2  border-black">
+                                    <label class="font-bold text-lg" for="">Reviewed By (Assistant Manager):</label>
+                                    
+                                    <input id="reviewedBy_btn" class=" pt-4  text-lg"  type="file" accept="image/*" name="reviewedby" value="{{list.reviewedby}}">
+                                    
+                                </div>
+                                <div class="flex flex-col space-y-4 border p-2 border-black">
+                                    <label class="font-bold text-lg text-center" for="">Approved By (Lab Manager):</label>
+        
+                                    <div class="flex text-sm">
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby" value="">
+        
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby1" value="">
+        
+                                    </div>
+                                </div>
+                                {% comment %} <div class="flex flex-col flex flex-col space-y-4 border p-2 border-black">
+                                    <label class="font-bold text-lg" for="">Approved By (Lab Manager):</label>
+                                    
+                                    <div class="flex text-sm">
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby" value="">
+        
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby1" value="">
+        
+                                    </div>
+                                    
+                                </div> {% endcomment %}
+                            </div>
+                            
+        
+                            <div class="h-32  mt-8 flex justify-center items-center">
+                                <div class=" space-x-8">
+                                    <i class="fa-solid fa-download pr-4" style="color: #fff;transform: translateX(97px);"></i>
+                                    <input type="submit" name="submit_and_new" class=" bg-blue-600 h-12 w-60 rounded shadow-2xl cursor-pointer text-white hover:bg-blue-500 "value='Save & Add New' />
+                                    <i class="fa-solid fa-file pr-4" style="color: #fff;transform: translateX(90px);"> </i> <input type="submit" name="submit_and_view" value="Save & View Report" class="bg-green-600 h-12 w-60 rounded shadow-2xl cursor-pointer text-white hover:bg-green-500" />
+                                </div>
+                            </div>
+        
+                     
+                    </div>
+        
+                    
+        
+            </form>
+            {% endif %}
+            
+            <section class="bg-gray-900 h-20 flex justify-center items-center w-full ">
+                      <div class="">
+                            <p class="text-lg text-gray-300">© Copyright 2023 EnviTechAl. All Rights Reserved.</p>
+                            <p></p>
+                      </div>
+                    </section>
+            
+        </div>
+        {% endblock content %}
+        </section>
+
+        <script>
+            
+            var now = new Date()
+                var date = now.getDate() 
+                var month = now.getMonth() + 1
+                var year = now.getFullYear()
+                var currentDate = `${year}${month}${date}`        
+                document.querySelector("#date").value = currentDate
+                document.querySelector(".date").value = currentDate
+                
+            
+        </script>
+<script src={% static '/js/app.js'%} defer >
+    $(document).ready(function() {
+        // Toggle the side navigation menu
+        $(".menu-toggle a").click(function() {
+            $(".side-nav").toggleClass("show");
+        });
+
+        // Toggle submenus
+        $(".sub-menu-toggle").click(function() {
+            $(this).siblings(".sub-menu").toggleClass("show");
+        });
+    });
+    
+</script>
+<script>
+    var seqs_value = document.querySelector(".SEQS-value")
+    var peqs_value = document.querySelector(".PEQS-value")
+    var neqs_value = document.querySelector(".NEQS-value")
+    var leg_1 = document.querySelector(".legend-1")
+    var leg_2 = document.querySelector(".legend-2")
+    var leg_3 = document.querySelector(".legend-3")
+    var leg_4 = document.querySelector(".legend-4")
+    var leg_5 = document.querySelector(".legend-5")
+    var leg_6 = document.querySelector(".legend-6")
+    var leg_7 = document.querySelector(".legend-7")
+    var leg_8 = document.querySelector(".legend-8")
+    var leg_9 = document.querySelector(".legend-9")
+    var leg_10 = document.querySelector(".legend-10")
+    var leg_11 = document.querySelector(".legend-11")
+    var checkinput = document.querySelector("#checkinput")
+    
+    
+    
+    seqs_value.addEventListener("change",()=>{
+        if(seqs_value.checked){
+            checkinput.value = "SEQS"
+            peqs_value.disabled=true
+            neqs_value.disabled=true
+            leg_3.value=""
+            leg_4.value=""
+            leg_3.style.display="none"
+            leg_4.style.display="none"
+    
+        }else {
+            checkinput.value = ""
+            peqs_value.disabled=false
+            neqs_value.disabled=false
+            leg_3.style.display="none"
+            leg_4.style.display="none"
+        }
+        
+    
+    })
+    peqs_value.addEventListener("change",()=>{
+        
+        if(peqs_value.checked){
+            checkinput.value = "PEQS"
+            seqs_value.disabled=true
+            neqs_value.disabled=true
+            leg_2.value = ""
+            leg_4.value = ""
+            leg_3.style.display = "block"
+            leg_3.value = "PEQS Limits = Punjab Environmental Quality Standard"
+            leg_2.style.display="none"
+            leg_4.style.display="none"
+            leg_5.value = "1=PEQS for Municipal & Liquid Industrial Effluent into inland waters."
+            leg_6.value = "2= PEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+            leg_7.value = ""
+            leg_8.value = ""
+            leg_7.style.display = "none"
+            leg_8.style.display = "none"
+    
+        }else{
+            checkinput.value = ""
+            neqs_value.disabled=false
+            seqs_value.disabled=false
+            leg_2.style.display="block"
+            leg_4.style.display="block"
+            leg_2.value="SEQS Limits = Sindh Environmental Quality Standard (Reference: SEQS 2016)."
+            leg_4.value="NEQS Limits = National Environmental Quality Standard"
+            leg_5.value = "1=SEQS for Municipal & Liquid Industrial Effluent into inland waters."
+            leg_6.value = "2= SEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+            leg_7.value = "3=SEQS for Municipal & Liquid Industrial Effluent into Sea."
+           
+        }
+    })
+    neqs_value.addEventListener("change",()=>{
+        if(neqs_value.checked){
+            checkinput.value = "NEQS"
+            seqs_value.disabled=true
+            peqs_value.disabled=true
+            leg_2.value=""
+            leg_3.value=""
+            leg_2.style.display="none"
+            leg_3.style.display="none"
+            leg_5.value = "1=NEQS for Municipal & Liquid Industrial Effluent into inland waters."
+            leg_6.value = "2= NEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+            leg_7.value = ""
+            leg_8.value = ""
+            leg_7.style.display = "none"
+            leg_8.style.display = "none"
+    
+        }else{
+            checkinput.value = ""
+            peqs_value.disabled=false
+            seqs_value.disabled=false
+            leg_2.style.display="block"
+            leg_3.style.display="block"
+            leg_2.value="SEQS Limits = Sindh Environmental Quality Standard (Reference: SEQS 2016)."
+            leg_3.value="PEQS Limits = Punjab Environmental Quality Standard"
+            leg_5.value = "1=SEQS for Municipal & Liquid Industrial Effluent into inland waters."
+            leg_6.value = "2= SEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+            leg_7.value = "3=SEQS for Municipal & Liquid Industrial Effluent into Sea."
+            
+           
+        }
+    })
+    
+    
+            $(document).ready(async () => {
+                $("#loc_err").show()
+                const req_pip = await fetch('https://api.ipify.org?format=json');
+                var public_ip = await req_pip.json();
+                public_ip = public_ip.ip ? public_ip.ip : null;
+                if (public_ip) {
+                    let url = `https://ipinfo.io/${public_ip}/json?token=fdc5faa922a0b1`
+                    const req_loc_ip = await fetch(url);
+                    var location = await req_loc_ip.json();
+                    console.log(location)
+                    if (location) {
+                        let region = location.region.toLowerCase();
+                        switch (region) {
+                            case "sindh": $("input[value='SEQS']").trigger("click"); break;
+                            case "punjab": $("input[value='PEQS']").trigger("click"); break;
+                            case "kpk": $("input[value='NEQS']").trigger("click"); break;
+                        }
+                        setTimeout(function(){
+                            $("#loc_err").hide()
+                        },1000)
+                      
+                    }
+                }
+            })
+        </script>
+</body>
+</html>

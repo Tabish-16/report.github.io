@@ -1,0 +1,1501 @@
+<!doctype html>
+<html>
+<head>
+    
+    {%load static%}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/db212db5f7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href={%static "style.css"%}>
+
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  
+    <style>
+    .NEQS,.PEQS{
+    display: none;
+    }
+</style> 
+  
+</head>
+<body>
+    
+<section id="header"  class="h-20 w-full bg-gray-900 flex flex-wrap items-center justify-between p-4 fixed top-0">
+    <a href="{% url "home" %}"><img class="h-14 ml-10" src={% static '/assets/logo-light.png'%} alt="image"></a>
+    <div id="profile" class="flex space-x-10 mr-10">
+        <span class="text-gray-200 text-xl flex gap-2">User : <p class="text-green-400">{{user.username}}</p></span>
+        <a href="{% url 'logout'  %}" class="w-24 mt-1  text-gray-200"><i class="fa-solid fa-power-off pr-2 text-red-400"></i>Logout</a>
+    </div>
+    
+</section>
+
+
+<section class="main w-full flex flex-row justify-end ">
+    
+        <nav class="side-nav list-none w-72 bg-gray-900 text-gray-100 h-full flex flex-col items-center fixed  top-22 left-0 overflow-x-hidden mt-20" >
+            <hr class="border border-gray-100 w-full">
+            <h1 class="text-2xl pb-10 pt-4 text-gray-100 font-bold text-center">SITE NAVIGATION</h1>
+                <ul class="w-48 ">
+                    
+
+                    
+                        <button class="sideNavFormBtn mb-2"><i class="fa-regular fa-pen-to-square pr-4"></i>Forms.<i class="fa-solid fa-chevron-right pl-20"></i></button>
+                        <div class="formMainDiv hidden">
+                            <hr class=" border-blue-200">
+                                <button class="DWaterBtn ml-2 pb-2"><i class="fa-solid fa-ellipsis-vertical mr-2"></i>Drinking Water</button>
+                                <div class="DWaterDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li ><a class="addDrinkFormBtn" href="/drinkingWaterForm"></i>Add Drinking Water</a></li>
+                                    <li ><a class="ListDrinkBtn" href="/drinkingWaterList"></i>List Drinking Water</a></li>
+                                
+                                </div>  
+                            
+                                <hr class=" border-blue-200">
+                                <ul class="">
+                                    <button class="gasEmBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Gaseous Emission</button>
+                                    <div class="gasEmDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="addGaseousFormBtn" href="/gaseousEmission">Add Gaseous Emis</a></li>
+                                    <li><a class="addGaseousListBtn" href="/gaseousEmissionList">List Gaseous Emis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ambientBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Ambienty Air Quality</button>
+                                    <div class="ambDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="ambientAirFormBtn" href="/ambientAir">Add Ambienty Air Qua..</a></li>
+                                    <li><a class="ambientAirList" href="/ambientAirList">List Ambienty Air Qua..</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                            
+                                <ul>
+                                    <button class="wasteWaterBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Waste Water Sludge</button>
+                                    <div class="wasteWaterDiv hidden text-blue-100 pl-6 space-y-2 ">
+                                    <li><a class="wasteWatewrSludgeBtn" href="/wasteWaterSludge">Add Waste Water Slu.</a></li>
+                                    <li><a class="wasteWaterSludgeListBtn" href="/wasteWaterSludgeList">List Waste Water Slu.</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="vehicEmBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Vehicular Emission</button>
+                                    <div class="vehicEmDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="vehicularEmisFormBtn" href="/vehicularEmission">Add Vehicular Emission</a></li>
+                                    <li><a class="vehicularemisListBtn" href="/vehicularEmissionList">List Vehicular Emission</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="luxBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Lux Analysis</button>
+                                    <div class="luxDiv text-blue-100 hidden pl-6 space-y-2">
+                                    <li><a class="luxAnalysisFormBtn" href="/luxAnalysis">Add Lux Analysis</a></li>
+                                    <li><a class="luxAnalysisListBtn" href="/luxAnalysisList">List Lux Analysis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="noiseBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Noise Analysis</button>
+                                <div class="noiseDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="noiseAnalysisFormBtn" href="/noiseAnalysis">Add Noise Analysis</a></li>
+                                    <li><a class="noiseAnalysisListBtn" href="/noiseAnalysisList">List Noise Analysis</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ppbagBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Packing Poly Bag</button>
+                                <div class="ppbagDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="packingPolyFormBtn" href="/packingPolyBag">Add Packing Poly Bag</a></li>
+                                    <li><a class="packingPolyListBtn" href="/packingPolyBagList">List Packing Poly Bag</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <div class="">
+                                    <button class="machineOilBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Machine Oil</button>
+                                   <div class="machineOilDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="machineOilFormBtn" href="/machineOil">Add Machine Oil</a></li>
+                                    <li><a class="machineOilListBtn" href="/machineOilList">List Machine Oil</a></li>
+                                   </div>
+                                </div>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="microBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Microbial Analysis</button>
+                                    <div class="microDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="microbialFormBtn" href="/microbialAnalysis">Add Microbial Analysis</a></li>
+                                    <li><a class="microbialListBtn" href="/microbialList">List Microbial Analysis</a></li>
+                                    </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="viscBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Viscous Liquid</button>
+                                <div class="viscDiv hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="viscousLiquidFormBtn" href="/viscousLiquid">Add Viscous Liquid</a></li>
+                                    <li><a class="viscousLiquidListBtn" href="/viscousLiquidList">List Viscous Liquid</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="ambientAirBtn pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Ambient Air Quality 2</button>
+                                <div class="ambientAirDiv hidden text-blue-100 pl-6 space-y-2" >
+                                    <li><a class="ambientAir2FormBtn" href="/ambientAirQuality2">Add Ambient Air 2</a></li>
+                                    <li><a class="ambientAir2ListBtn" href="/ambientAir2List">List Ambient Air 2</a></li>
+                                </div>
+                                </ul>
+                                <hr class=" border-blue-200">
+                                <ul>
+                                    <button class="waterwastebtn2 pb-2"><i class="fa-solid fa-ellipsis-vertical p-2"></i>Waste Water2</button>
+                                <div class="waterwastediv2 hidden text-blue-100 pl-6 space-y-2">
+                                    <li><a class="wasteWater2FormBtn" href="/wasteWater2">Add Waste Water2</a></li>
+                                    <li><a class="wasteWater2ListBtn" href="/wasteWater2List">List Waste Water2</a></li>
+                                </div>
+                                </ul>
+                        </div>
+                            
+                        
+                        </ul>
+                        
+                    
+                    
+                        
+
+                
+            
+        </nav>
+
+        <div class="wasteWaters2 h-full w-10/12 flex flex-col items-center ">
+                        
+{% block content %}
+{% if data %}
+            <form action="{% url "wasteWater2-Save" pk=data.id %}" method="post" enctype="multipart/form-data" class="flex flex-col justify-around w-11/12 mt-10 ">
+                {% csrf_token %}
+                <h1 class="text-center mt-10 text-3xl py-16">Waste Water 2</h1>
+                <div class="alert w-10/12 flex flex-col justify-around my-6">
+                    
+                    <div class="">
+                       
+                        <p style="display: flex;">Filling Report For? <img id="loc_err" style="overflow: hidden;height: 50px;width:50px;margin-top:-12px;" src="{% static "/assets/loader.gif" %}"/></p>
+                    </div>
+                    <div class="">
+                        <input class="SEQS-value" type="checkbox" value="SEQS_">
+                        <label for="">SEQS</label>
+                    </div>
+                    <div class="">
+                        <input class="PEQS-value" type="checkbox" value="PEQS_">
+                        <label for="">PEQS</label>
+                    </div>
+                    <div class="">
+                        <input class="NEQS-value" type="checkbox" value="NEQS_">
+                        <label for="">NEQS</label>
+                    </div>
+
+                </div>
+                <input id="checkinput" type="text" name="location" value="" style="display: none;">
+                <div class="flex justify-between">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Lab Report No</label>
+                        <input class="date border-2 border-black p-2 h-10 w-96 rounded text-lg" name="lab_rep_no" type="text" value="{{data.lab_rep_no}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Invoice Bill No</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="invoice_no" type="text" value="{{data.invoice_no}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Reporting Date</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="repo_date" type="date" value="{{data.repo_date}}">
+                    </div>
+                </div>
+                <hr class="broder border-black mt-10">
+    
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Report To :</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="report_to" style="width: 35rem;" type="text" value="{{data.report_to}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Address</label>
+                        <input class="border-2 border-black p-2 h-10 rounded text-lg" name="address" style="width: 35rem;" type="text" value="{{data.address}}">
+                    </div>
+                    
+                    
+                </div>
+    
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Attention</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="attention" style="width: 35rem;" type="text" value="{{data.attention}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Email</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="email" style="width: 35rem;" type="text" value="{{data.email}}" >
+                    </div>
+                </div>
+    
+                <hr class="broder border-black mt-10">
+    
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample ID</label>
+                        <input id="date" class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sampleId" style="width: 24rem;" type="text" value="{{data.sampleId}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Collection Date</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_Col_date" style="width: 24rem;" type="date" value="{{data.sample_Col_date}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Description</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_desc" style="width: 24rem;" type="text" value="{{data.sample_desc}}">
+                    </div>
+                </div>
+    
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sampling Method</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sampling_method" style="width: 24rem;" type="text" value="{{data.sampling_method}}">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="font-bold text-lg" for="">Sample Type</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_type" style="width: 24rem;" type="text" value="{{data.sample_type}}">
+                    </div>
+                    <div class="flex flex-col ">
+                        <label class="font-bold text-lg" for="">Samle Collected By</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="sample_collected_by" style="width: 24rem;" type="text" value="{{data.sample_collected_by}}">
+                    </div>
+                </div>
+    
+                <div class="flex justify-between mt-4">
+                    <div class="flex flex-col ">
+                        <label class="font-bold text-lg" for="">Date of Analysis</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="date_of_analysis" style="width: 38rem;" type="date" value="{{data.date_of_analysis}}">
+                    </div>
+                    <div class="flex flex-col ">
+                        <label class="font-bold text-lg" for="">Test Description</label>
+                        <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="test_description" style="width: 38rem;" type="text" value="{{data.test_description}}">
+                    </div>
+                   
+                </div>
+                <hr class="broder border-black mt-10">
+    
+    
+    
+                <div class="w-full flex flex-col justify-center">
+                    <table id="" class=" water-form-table border-collapse border-2 border-gray-700 mt-10 " cellspacing="15">
+                        <thead>
+                            <tr>
+                                <th>Sr.#</th>
+                                <th>Parameter/Analytes Description</th>
+                                <th>Methods</th>
+                                <th>Unit</th>
+                                <th>Inlet Result</th>
+                                <th>Outlet Result</th>
+                                <th><select id= "result_type" name="select" class="select border-2 border-gray-700 p-2">
+                                    <option value="SEQS">SEQS Limits</option>
+                                    <option value="PEQS">PEQS Limits</option>
+                                    <option value="NEQS">NEQS Limits</option>
+                                </select>
+                                <br>
+                                <div class="flex justify-around pt-6 text-lg">
+                                <div class="">1</div>
+                                <div class="">2</div>
+                                <div class="">3</div>
+
+                
+
+                                </div>
+                            </th>
+                                
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr class="text-center border h-16">
+                                <td>01</td>
+                                <td>Temperature 40mg/L</td>
+                                <td>*APHA 2550</td>
+                                <td>mg/L</td>
+                                <td><input name="result_1" class="border-2 border-black  px-2" value="{{data.result_1}}"  type="text"></td>
+                                <td><input name="result_1_1" class="border-2 border-black px-2" value="{{data.result_1_1}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around ">
+                                       
+                                        <!---SEQS-->
+                                        <div class="SEQS flex flex-col">
+                                           <p>≤</p>
+                                           <p>3C</p>
+                                         </div>
+                                         <div class="SEQS flex flex-col">
+                                            <p>≤</p>
+                                            <p>3C</p>
+                                          </div>
+                                          <div class="SEQS flex flex-col">
+                                            <p>≤</p>
+                                            <p>3C</p>
+                                          </div>
+                                        
+                                          <!---PEQS-->
+                                          <div class="PEQS flex flex-col">
+                                            <p>≤</p>
+                                            <p>3C</p>
+                                          </div>
+                                          <div class="PEQS flex flex-col">
+                                             <p>≤</p>
+                                             <p>3C</p>
+                                           </div>
+                                           <div class="PEQS flex flex-col">
+                                             <p>-</p>
+                                             
+                                           </div>
+
+                                          {% comment %} NEQS {% endcomment %}
+
+                                          <div class="NEQS flex flex-col">
+                                            <p>≤</p>
+                                            <p>3C</p>
+                                          </div>
+                                          <div class="NEQS flex flex-col">
+                                             <p>≤</p>
+                                             <p>3C</p>
+                                           </div>
+                                           <div class="NEQS flex flex-col">
+                                             <p>-</p>
+                                             
+                                           </div>
+                                            
+
+                                        
+
+                                        
+                                        
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>02</td>
+                                <td>pH</td>
+                                <td>*APHA 4500 H-B</td>
+                                <td>-</td>
+                                <td><input name="result_2" class="border-2 border-black  px-2" value="{{data.result_2}}" type="text"></td>
+                                <td><input name="result_2_2" class="border-2 border-black px-2" value="{{data.result_2_2}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 6-9</div>
+                                        <div class="SEQS"> 6-9</div>
+                                        <div class="SEQS"> 6-9</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 6-9</div>
+                                        <div class="PEQS"> 6-9</div>
+                                        <div class="PEQS"> -</div>
+                                        
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 6-9</div>
+                                        <div class="NEQS"> 6-9</div>
+                                        <div class="NEQS"> -</div>
+
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>03</td>
+                                <td>Sulphide</td>
+                                <td>*APHA 4500-S2-D</td>
+                                <td>mg/L</td>
+                                <td><input name="result_3" class="border-2 border-black  px-2" value="{{data.result_3}}" type="text"></td>
+                                <td><input name="result_3_3" class="border-2 border-black px-2" value="{{data.result_3_3}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>04</td>
+                                <td>Biological Oxygen Demand(BOD)5</td>
+                                <td>HACH 10099</td>
+                                <td>mg/L</td>
+                                <td><input name="result_4" class="border-2 border-black  px-2" value="{{data.result_4}}" type="text"></td>
+                                <td><input name="result_4_4" class="border-2 border-black px-2" value="{{data.result_4_4}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 80</div>
+                                        <div class="SEQS"> 250</div>
+                                        <div class="SEQS"> 80</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 80</div>
+                                         <div class="PEQS"> 250</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 80</div>
+                                         <div class="NEQS"> 250</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>05</td>
+                                <td>Chemical Oxygen Demand(COD)</td>
+                                <td>*HACH 8000</td>
+                                <td>mg/L</td>
+                                <td><input name="result_5" class="border-2 border-black  px-2" value="{{data.result_5}}" type="text"></td>
+                                <td><input name="result_5_5" class="border-2 border-black px-2" value="{{data.result_5_5}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 150</div>
+                                        <div class="SEQS"> 400</div>
+                                        <div class="SEQS"> 400</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 150</div>
+                                         <div class="PEQS"> 400</div>
+                                         <div class="PEQS"> -</div>
+                                        <div class="SEQS"> 400</div>
+
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 150</div>
+                                         <div class="NEQS"> 400</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>06</td>
+                                <td>Total Dissolved Solids (TDS)</td>
+                                <td>*APHA 2540-C</td>
+                                <td>mg/L</td>
+                                <td><input name="result_6" class="border-2 border-black  px-2" value="{{data.result_6}}" type="text"></td>
+                                <td><input name="result_6_6" class="border-2 border-black px-2" value="{{data.result_6_6}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 3500</div>
+                                        <div class="SEQS"> 3500</div>
+                                        <div class="SEQS"> 3500</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 3500</div>
+                                         <div class="PEQS"> 3500</div>
+                                         <div class="PEQS"> -</div>
+
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 3500</div>
+                                         <div class="NEQS"> 3500</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>07</td>
+                                <td>Total Suspended Solids (TSS)</td>
+                                <td>*APHA 2540-D</td>
+                                <td>mg/L</td>
+                                <td><input name="result_7" class="border-2 border-black  px-2" value="{{data.result_7}}" type="text"></td>
+                                <td><input name="result_7_7" class="border-2 border-black px-2" value="{{data.result_7_7}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 200</div>
+                                        <div class="SEQS"> 400</div>
+                                        <div class="SEQS"> 200</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 200</div>
+                                         <div class="PEQS"> 400</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 200</div>
+                                         <div class="NEQS"> 400</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>08</td>
+                                <td>Oil & Grease</td>
+                                <td><select class="border border-black " name="metho_select" id="">
+                                    <option value="ASTM">ASTM D-3921</option>
+                                    <option value="USEPA">USEPA 1664</option>
+                                    <option value="APHA">APHA 5220-B</option>
+                                </select></td>
+                                <td>mg/L</td>
+                                <td><input name="result_8" class="border-2 border-black  px-2" value="{{data.result_8}}" type="text"></td>
+                                <td><input name="result_8_8" class="border-2 border-black px-2" value="{{data.result_8_8}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 10</div>
+                                        <div class="SEQS"> 10</div>
+                                        <div class="SEQS"> 10</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 10</div>
+                                         <div class="PEQS"> 10</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 10</div>
+                                         <div class="NEQS"> 10</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>09</td>
+                                <td>Cadmium</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_9" class="border-2 border-black  px-2" value="{{data.result_9}}" type="text"></td>
+                                <td><input name="result_9_9" class="border-2 border-black px-2" value="{{data.result_9_9}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.1</div>
+                                        <div class="SEQS"> 0.1</div>
+                                        <div class="SEQS"> 0.1</div>
+
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 0.1</div>
+                                         <div class="PEQS"> 0.1</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 0.1</div>
+                                         <div class="NEQS"> 0.1</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>10</td>
+                                <td>Copper</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_10" class="border-2 border-black  px-2" value="{{data.result_10}}" type="text"></td>
+                                <td><input name="result_10_10" class="border-2 border-black px-2" value="{{data.result_10_10}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> -</div>
+
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>11</td>
+                                <td>Iron</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_11" class="border-2 border-black  px-2" value="{{data.result_11}}" type="text"></td>
+                                <td><input name="result_11_11" class="border-2 border-black px-2" value="{{data.result_11_11}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 8</div>
+                                        <div class="SEQS"> 8</div>
+                                        <div class="SEQS"> 8</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 8</div>
+                                         <div class="PEQS"> 8</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 8</div>
+                                         <div class="NEQS"> 8</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>12</td>
+                                <td>Lead</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_12" class="border-2 border-black  px-2" value="{{data.result_12}}" type="text"></td>
+                                <td><input name="result_12_12" class="border-2 border-black px-2" value="{{data.result_12_12}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.5</div>
+                                        <div class="SEQS"> 0.5</div>
+                                        <div class="SEQS"> 0.5</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 0.5</div>
+                                         <div class="PEQS"> 0.5</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 0.5</div>
+                                         <div class="NEQS"> 0.5</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            
+                            <tr class="text-center border h-16">
+                                <td>13</td>
+                                <td>Manganese</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_13" class="border-2 border-black  px-2" value="{{data.result_13}}" type="text"></td>
+                                <td><input name="result_13_13" class="border-2 border-black px-2" value="{{data.result_13_13}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1.5</div>
+                                        <div class="SEQS"> 1.5</div>
+                                        <div class="SEQS"> 1.5</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 1.5</div>
+                                         <div class="PEQS"> 1.5</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 1.5</div>
+                                         <div class="NEQS"> 1.5</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+
+                            <tr class="text-center border h-16">
+                                <td>14</td>
+                                <td>Mercury</td>
+                                <td>*APHA 3112-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_14" class="border-2 border-black  px-2" value="{{data.result_14}}" type="text"></td>
+                                <td><input name="result_14_14" class="border-2 border-black px-2" value="{{data.result_14_14}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.01</div>
+                                        <div class="SEQS"> 0.01</div>
+                                        <div class="SEQS"> 0.01</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 0.01</div>
+                                         <div class="PEQS"> 0.01</div>
+                                         <div class="PEQS"> -</div>
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 0.01</div>
+                                         <div class="NEQS"> 0.01</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>15</td>
+                                <td>Nickel</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_15" class="border-2 border-black  px-2" value="{{data.result_15}}" type="text"></td>
+                                <td><input name="result_15_15" class="border-2 border-black px-2" value="{{data.result_15_15}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                         <!---PEQS-->
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> 1</div>
+                                         <div class="PEQS"> -</div>
+
+                                         <!---NEQS-->
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> 1</div>
+                                         <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>16</td>
+                                <td>Selenium</td>
+                                <td>*APHA 3114-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_16" class="border-2 border-black  px-2" value="{{data.result_16}}" type="text"></td>
+                                <td><input name="result_16_16" class="border-2 border-black px-2" value="{{data.result_16_16}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.5</div>
+                                        <div class="SEQS"> 0.5</div>
+                                        <div class="SEQS"> 0.5</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 0.5</div>
+                                        <div class="PEQS"> 0.5</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 0.5</div>
+                                        <div class="NEQS"> 0.5</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>17</td>
+                                <td>Chromium</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_17" class="border-2 border-black  px-2" value="{{data.result_17}}" type="text"></td>
+                                <td><input name="result_17_17" class="border-2 border-black px-2" value="{{data.result_17_17}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> -</div>
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> -</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>18</td>
+                                <td>Zinc</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_18" class="border-2 border-black  px-2" value="{{data.result_18}}" type="text"></td>
+                                <td><input name="result_18_18" class="border-2 border-black px-2" value="{{data.result_18_18}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 5</div>
+                                        <div class="SEQS"> 5</div>
+                                        <div class="SEQS"> 5</div>
+                                        
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 5</div>
+                                        <div class="PEQS"> 5</div>
+                                        <div class="PEQS"> -</div>
+                                        
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 5</div>
+                                        <div class="NEQS"> 5</div>
+                                        <div class="NEQS"> -</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>19</td>
+                                <td>Arsenic</td>
+                                <td>*APHA 3114-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_19" class="border-2 border-black  px-2" value="{{data.result_19}}" type="text"></td>
+                                <td><input name="result_19_19" class="border-2 border-black px-2" value="{{data.result_19_19}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> -</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>20</td>
+                                <td>Chlorine</td>
+                                <td>HACH 10069</td>
+                                <td>mg/L</td>
+                                <td><input name="result_20" class="border-2 border-black  px-2" value="{{data.result_20}}" type="text"></td>
+                                <td><input name="result_20_20" class="border-2 border-black px-2" value="{{data.result_20_20}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>21</td>
+                                <td>Chloride</td>
+                                <td>*APHA 4500 CL-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_21" class="border-2 border-black  px-2" value="{{data.result_21}}" type="text"></td>
+                                <td><input name="result_21_21" class="border-2 border-black px-2" value="{{data.result_21_21}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1000</div>
+                                        <div class="SEQS"> 1000</div>
+                                        <div class="SEQS"> **SC</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1000</div>
+                                        <div class="PEQS"> 1000</div>
+                                        <div class="PEQS"> -</div>
+                                        
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1000</div>
+                                        <div class="NEQS"> 1000</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>22</td>
+                                <td>Cyanide</td>
+                                <td>HACH 8027</td>
+                                <td>mg/L</td>
+                                <td><input name="result_22" class="border-2 border-black  px-2" value="{{data.result_22}}" type="text"></td>
+                                <td><input name="result_22_22" class="border-2 border-black px-2" value="{{data.result_22_22}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> 1</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>23</td>
+                                <td>Fluoride</td>
+                                <td>*HACH 8029</td>
+                                <td>mg/L</td>
+                                <td><input name="result_23" class="border-2 border-black  px-2" value="{{data.result_23}}" type="text"></td>
+                                <td><input name="result_23_23" class="border-2 border-black px-2" value="{{data.result_23_23}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 10</div>
+                                        <div class="SEQS"> 10</div>
+                                        <div class="SEQS"> 10</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 10</div>
+                                        <div class="PEQS"> 10</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 10</div>
+                                        <div class="NEQS"> 10</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>24</td>
+                                <td>Ammonia</td>
+                                <td>*HACH 8038</td>
+                                <td>mg/L</td>
+                                <td><input name="result_24" class="border-2 border-black  px-2" value="{{data.result_24}}" type="text"></td>
+                                <td><input name="result_24_24" class="border-2 border-black px-2" value="{{data.result_24_24}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 40</div>
+                                        <div class="SEQS"> 40</div>
+                                        <div class="SEQS"> 40</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 40</div>
+                                        <div class="PEQS"> 40</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 40</div>
+                                        <div class="NEQS"> 40</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>25</td>
+                                <td>Total Toxic Metals</td>
+                                <td>	APHA 3111</td>
+                                <td>mg/L</td>
+                                <td><input name="result_25" class="border-2 border-black  px-2" value="{{data.result_25}}" type="text"></td>
+                                <td><input name="result_25_25" class="border-2 border-black px-2" value="{{data.result_25_25}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 2</div>
+                                        <div class="SEQS"> 2</div>
+                                        <div class="SEQS"> 2</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 2</div>
+                                        <div class="PEQS"> 2</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 2</div>
+                                        <div class="NEQS"> 2</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>26</td>
+                                <td>Sulphate</td>
+                                <td>HACH 8051</td>
+                                <td>mg/L</td>
+                                <td><input name="result_26" class="border-2 border-black  px-2" value="{{data.result_26}}" type="text"></td>
+                                <td><input name="result_26_26" class="border-2 border-black px-2" value="{{data.result_26_26}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 600</div>
+                                        <div class="SEQS"> 1000</div>
+                                        <div class="SEQS"> **SC</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 600</div>
+                                        <div class="PEQS"> 1000</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 600</div>
+                                        <div class="NEQS"> 1000</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>27</td>
+                                <td>An Ionic Detergent As MBAs</td>
+                                <td>*APHA 5540 C</td>
+                                <td>mg/L</td>
+                                <td><input name="result_27" class="border-2 border-black  px-2" value="{{data.result_27}}" type="text"></td>
+                                <td><input name="result_27_27" class="border-2 border-black px-2" value="{{data.result_27_27}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 20</div>
+                                        <div class="SEQS"> 20</div>
+                                        <div class="SEQS"> 20</div>
+                                        
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 20</div>
+                                        <div class="PEQS"> 20</div>
+                                        <div class="PEQS"> -</div>
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 20</div>
+                                        <div class="NEQS"> 20</div>
+                                        <div class="NEQS"> -</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>28</td>
+                                <td>Pesticides</td>
+                                <td>USEPA-614.1</td>
+                                <td>mg/L</td>
+                                <td><input name="result_28" class="border-2 border-black  px-2" value="{{data.result_28}}" type="text"></td>
+                                <td><input name="result_28_28" class="border-2 border-black px-2" value="{{data.result_28_28}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.15</div>
+                                        <div class="SEQS"> 0.15</div>
+                                        <div class="SEQS"> 0.15</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 0.15</div>
+                                        <div class="PEQS"> 0.15</div>
+                                        <div class="PEQS"> -</div>
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 0.15</div>
+                                        <div class="NEQS"> 0.15</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>29</td>
+                                <td>Phenolic Compounds(as Phenol)</td>
+                                <td>HACH 8047</td>
+                                <td>mg/L</td>
+                                <td><input name="result_29" class="border-2 border-black  px-2" value="{{data.result_29}}" type="text"></td>
+                                <td><input name="result_29_29" class="border-2 border-black px-2" value="{{data.result_29_29}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 0.1</div>
+                                        <div class="SEQS"> 0.3</div>
+                                        <div class="SEQS"> 0.3</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 0.1</div>
+                                        <div class="PEQS"> 0.1</div>
+                                        <div class="PEQS"> -</div>
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 0.1</div>
+                                        <div class="NEQS"> 0.1</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>30</td>
+                                <td>Boron</td>
+                                <td>HACH 8015</td>
+                                <td>mg/L</td>
+                                <td><input name="result_30" class="border-2 border-black  px-2 " value="{{data.result_30}}" type="text"></td>
+                                <td><input name="result_30_30" class="border-2 border-black px-2" value="{{data.result_30_30}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 6</div>
+                                        <div class="SEQS"> 6</div>
+                                        <div class="SEQS"> 6</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 6</div>
+                                        <div class="PEQS"> 6</div>
+                                        <div class="PEQS"> -</div>
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 6</div>
+                                        <div class="NEQS"> 6</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+
+                            <tr class="text-center border h-16">
+                                <td>31</td>
+                                <td>Barium</td>
+                                <td>HACH 8014</td>
+                                <td>mg/L</td>
+                                <td><input name="result_31" class="border-2 border-black  px-2" value="{{data.result_31}}" type="text"></td>
+                                <td><input name="result_31_31" class="border-2 border-black px-2" value="{{data.result_31_31}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1.5</div>
+                                        <div class="SEQS"> 1.5</div>
+                                        <div class="SEQS"> 1.5</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1.5</div>
+                                        <div class="PEQS"> 1.5</div>
+                                        <div class="PEQS"> -</div>
+
+                                        <!---NEQS-->
+                                        <div class="NEQS"> 1.5</div>
+                                        <div class="NEQS"> 1.5</div>
+                                        <div class="NEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="text-center border h-16">
+                                <td>32</td>
+                                <td>Silver</td>
+                                <td>*APHA 3111-B</td>
+                                <td>mg/L</td>
+                                <td><input name="result_32" class="border-2 border-black  px-2" value="{{data.result_32}}" type="text"></td>
+                                <td><input name="result_32_32" class="border-2 border-black px-2" value="{{data.result_32}}" type="text"></td>
+                                <td>
+                                    <div class="flex justify-around">
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+                                        <div class="SEQS"> 1</div>
+
+                                        <!---PEQS-->
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> 1</div>
+                                        <div class="PEQS"> -</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            
+                           
+                            
+                        </tbody>
+                    </table>
+    
+                    <hr class="broder border-black mt-10">
+    
+                    
+    
+                        <h2 class="py-2 font-bold">LEGENDS</h2>
+                    
+                    
+    
+                        
+                        {% comment %} <div class="legends w-full flex flex-col space-y-10 border-2 border-gray-200 p-8 mt-10">
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_1" required value="Test Result = M">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_2" required value="*APHA Standard Methods for Examination of water & wastewater 23rd Edition (2017).">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_3" required value="SEQS Limits = Sindh Environmental Quality Standard (Reference: SEQS 2016).">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_4" required value="PEQS Limits = Punjab Environmental Quality Standard">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_5" required value="NEQS Limits = National Environmental Quality Standard">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_6" required value="1=SEQS for Municipal & Liquid Industrial Effluent into inland waters.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_7" required value="2= SEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_8" required value="3=SEQS for Municipal & Liquid Industrial Effluent into Sea.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_9" required value="** Discharge Concentration at or below Sea Concentration (SC).">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_10" required value="M = Meet SEQS-2016 requirements.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_11" required value="F = Below SEQS-2016 requirements.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_12" required value="N.D. = Not Detected.">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_13" required value="N.A = Not Available">    
+                            <input class="h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_14" required value="Customer Requirement: N.A">    
+                        </div> {% endcomment %}
+
+                        <div class="legends w-full flex flex-col space-y-10 border-2 border-gray-200 p-8 mt-10">
+                            <input class="legend-1 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_1" maxlength="150" value="{{data.legend_1}}">
+                            <input class="legend-2 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_2" maxlength="150" value="{{data.legend_2}}">
+                            <input class="legend-3 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_3" maxlength="150" value="{{data.legend_3}}">
+                            <input class="legend-4 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_4" maxlength="150" value="{{data.legend_4}}">
+                            <input class="legend-5 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_5" maxlength="150" value="{{data.legend_5}}">
+                            <input class="legend-6 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_6" maxlength="150" value="{{data.legend_6}}">
+                            <input class="legend-7 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_7" maxlength="150" value="{{data.legend_7}}">
+                            <input class="legend-8 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_8" maxlength="150" value="{{data.legend_8}}">
+                            <input class="legend-9 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_9" maxlength="150" value="{{data.legend_9}}">
+                            <input class="legend-10 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_10" maxlength="150" value="{{data.legend_10}}">
+                            <input class="legend-11 h-12 px-2 py-3 border-2 border-black w-full" type="text " name="legend_11" maxlength="150" value="{{data.legend_11}}">
+                        </div>
+
+                            <div class="flex flex-col justify-between mt-6">
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Edit Note</label>
+                                    <input class="border-2 border-black p-2 h-10 rounded text-lg" name="editNote" style="width: 79rem;" type="text" value="{{data.editNote}}">
+                                </div>
+                                <div class="flex flex-col mt-4">
+                                    <label class="font-bold text-lg" for="">Custom Legend (if any):</label>
+                                    <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="customlegend" style="width: 35rem;" type="text" value="{{data.customlegend}}">
+                                </div>
+                                
+                            </div>
+        
+                            <div class="flex justify-between mt-6">
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for=""> Doc. Controller 1:</label>
+                                    <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" name="doc1" type="text" value="{{data.doc1}}">
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Doc. Controller 2:</label>
+                                    <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" type="text" name="doc2" value="{{data.doc2}}">
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="font-bold text-lg" for="">Doc. Controller 3:</label>
+                                    <input class="border-2 border-black p-2 h-10 w-96 rounded text-lg" type="text" name="doc3" value="{{data.doc3}}">
+                                </div>
+                            </div>
+
+                            <hr class="broder border-black mt-10">
+                                        
+                                        {% comment %} <div class="flex justify-between mt-6">
+                                            <div class="flex flex-col">
+                                                <label class="font-bold text-lg" for=""> Analyzed By (Analyst):</label>
+                                                <input class=" pt-4  text-lg" required type="file" accept="image/*" name="analyzedby" value="">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label class="font-bold text-lg" for="">Reviewed By (Assistant Manager):</label>
+                                                <input class=" pt-4  text-lg" required type="file" accept="image/*" name="reviewedby" value="">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label class="font-bold text-lg" for="">Approved By (Lab Manager):</label>
+                                                <input class=" pt-4  text-lg" required type="file" accept="image/*" name="approvedby"  value="">
+                                            </div>
+                                        </div>
+    
+                            <div class="h-32  mt-8 flex justify-center items-center">
+                               <div class="space-x-8">
+                                <button class="bg-blue-600 h-12 w-60 rounded shadow-2xl text-white hover:bg-blue-500 "><i class="fa-solid fa-download pr-4  "></i>Save & Add New</button>
+                                <button class="h-12 bg-green-500 rounded  shadow-2xl w-60 hover:bg-green-400 text-white"><i class="fa-solid fa-file pr-4"></i>Save & View Report</button>
+                               </div>
+                            </div> {% endcomment %}
+                            <div class="flex justify-between mt-6 text-sm">
+                                <div class="flex flex-col space-y-4 border p-2  border-black">
+                                    <label class="font-bold text-lg" for=""> Analyzed By (Analyst):</label>
+                                    <input class="analyzedBy_btn" required class="  pt-4  text-lg" type="file" accept="image/*"
+                                        name="analyzedby" value="">
+                                </div>
+                                <div class="flex flex-col space-y-4 border p-2 border-black">
+                                    <label class="font-bold text-lg" for="">Reviewed By (Assistant Manager):</label>
+        
+                                    <input class="reviewedBy_btn" required class=" pt-4  text-lg" type="file" accept="image/*"
+                                        name="reviewedby" value="">
+        
+                                </div>
+                                <div class="flex flex-col space-y-4 border p-2 border-black">
+                                    <label class="font-bold text-lg text-center" for="">Approved By (Lab Manager):</label>
+        
+                                    <div class="flex text-sm">
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby" value="">
+        
+                                        <input class="approvedby_btn" required class=" pt-4  text-lg" type="file"
+                                            accept="image/*" name="approvedby1" value="">
+        
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+                            <div class="h-32  mt-8 flex justify-center items-center">
+                                <div class=" space-x-8">
+                                    <i class="fa-solid fa-download pr-4" style="color: #fff;transform: translateX(97px);"></i>
+                                    <input type="submit" name="submit_and_new" class=" bg-blue-600 h-12 w-60 rounded shadow-2xl cursor-pointer text-white hover:bg-blue-500 "value='Update' />
+                                    <i class="fa-solid fa-file pr-4" style="color: #fff;transform: translateX(90px);"> </i> <input type="submit" name="submit_and_view" value="Update & View Report" class="bg-green-600 h-12 w-60 rounded shadow-2xl cursor-pointer text-white hover:bg-green-500" />
+                                </div>
+                            </div>
+    
+                     
+                    </div>
+    
+                    
+    
+            </form>
+            {% endif %}
+            {% endblock  %}
+            <section class="bg-gray-900 h-20 flex justify-center items-center w-full ">
+                      <div class="">
+                            <p class="text-lg text-gray-300">© Copyright 2023 EnviTechAl. All Rights Reserved.</p>
+                            <p></p>
+                      </div>
+                    </section>
+            
+        </div>
+        </section>
+
+        <script>
+            var now = new Date()
+                var date = now.getDate() 
+                var month = now.getMonth() + 1
+                var year = now.getFullYear()
+                var currentDate = `${year}${month}${date}`        
+                document.querySelector("#date").value = currentDate
+                document.querySelector(".date").value = currentDate
+                
+            
+        </script>
+        <script>
+            var seqs_value = document.querySelector(".SEQS-value")
+            var peqs_value = document.querySelector(".PEQS-value")
+            var neqs_value = document.querySelector(".NEQS-value")
+            var leg_1 = document.querySelector(".legend-1")
+            var leg_2 = document.querySelector(".legend-2")
+            var leg_3 = document.querySelector(".legend-3")
+            var leg_4 = document.querySelector(".legend-4")
+            var leg_5 = document.querySelector(".legend-5")
+            var leg_6 = document.querySelector(".legend-6")
+            var leg_7 = document.querySelector(".legend-7")
+            var leg_8 = document.querySelector(".legend-8")
+            var leg_9 = document.querySelector(".legend-9")
+            var leg_10 = document.querySelector(".legend-10")
+            var leg_11 = document.querySelector(".legend-11")
+            var select = document.querySelector(".select")
+            var checkinput = document.querySelector("#checkinput")
+            
+            
+            
+            seqs_value.addEventListener("change",()=>{
+                if(seqs_value.checked){
+                    checkinput.value = "SEQS"
+                    select.value = "SEQS"
+                    peqs_value.disabled=true
+                    neqs_value.disabled=true
+                    leg_3.value=""
+                    leg_4.value=""
+                    leg_3.style.display="none"
+                    leg_4.style.display="none"
+            
+                }else {
+                    checkinput.value = ""
+                    peqs_value.disabled=false
+                    neqs_value.disabled=false
+                    leg_3.style.display="none"
+                    leg_4.style.display="none"
+                }
+                
+            
+            })
+            peqs_value.addEventListener("change",()=>{
+                
+                if(peqs_value.checked){
+                    checkinput.value = "PEQS"
+                    select.value = "PEQS"
+                    seqs_value.disabled=true
+                    neqs_value.disabled=true
+                    leg_2.value = ""
+                    leg_4.value = ""
+                    leg_3.style.display = "block"
+                    leg_3.value = "PEQS Limits = Punjab Environmental Quality Standard"
+                    leg_2.style.display="none"
+                    leg_4.style.display="none"
+                    leg_5.value = "1=PEQS for Municipal & Liquid Industrial Effluent into inland waters."
+                    leg_6.value = "2= PEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+                    leg_7.value = ""
+                    leg_8.value = ""
+                    leg_7.style.display = "none"
+                    leg_8.style.display = "none"
+            
+                }else{
+                    checkinput.value = ""
+                    select.value = "SEQS"
+                    neqs_value.disabled=false
+                    seqs_value.disabled=false
+                    leg_2.style.display="block"
+                    leg_4.style.display="block"
+                    leg_2.value="SEQS Limits = Sindh Environmental Quality Standard (Reference: SEQS 2016)."
+                    leg_4.value="NEQS Limits = National Environmental Quality Standard"
+                    leg_5.value = "1=SEQS for Municipal & Liquid Industrial Effluent into inland waters."
+                    leg_6.value = "2= SEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+                    leg_7.value = "3=SEQS for Municipal & Liquid Industrial Effluent into Sea."
+                   
+                }
+            })
+            neqs_value.addEventListener("change",()=>{
+                if(neqs_value.checked){
+                    checkinput.value = "NEQS"
+                    select.value = "NEQS"
+                    seqs_value.disabled=true
+                    peqs_value.disabled=true
+                    leg_2.value=""
+                    leg_3.value=""
+                    leg_2.style.display="none"
+                    leg_3.style.display="none"
+                    leg_5.value = "1=NEQS for Municipal & Liquid Industrial Effluent into inland waters."
+                    leg_6.value = "2= NEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+                    leg_7.value = ""
+                    leg_8.value = ""
+                    leg_7.style.display = "none"
+                    leg_8.style.display = "none"
+            
+                }else{
+                    checkinput.value = ""
+                    select.value = "SEQS"
+                    peqs_value.disabled=false
+                    seqs_value.disabled=false
+                    leg_2.style.display="block"
+                    leg_3.style.display="block"
+                    leg_2.value="SEQS Limits = Sindh Environmental Quality Standard (Reference: SEQS 2016)."
+                    leg_3.value="PEQS Limits = Punjab Environmental Quality Standard"
+                    leg_5.value = "1=SEQS for Municipal & Liquid Industrial Effluent into inland waters."
+                    leg_6.value = "2= SEQS for Municipal & Liquid Industrial Effluent into Sewage Treatment."
+                    leg_7.value = "3=SEQS for Municipal & Liquid Industrial Effluent into Sea."
+                   
+                }
+            })
+            
+            
+                    $(document).ready(async () => {
+                        $("#loc_err").show()
+                        const req_pip = await fetch('https://api.ipify.org?format=json');
+                        var public_ip = await req_pip.json();
+                        public_ip = public_ip.ip ? public_ip.ip : null;
+                        if (public_ip) {
+                            let url = `https://ipinfo.io/${public_ip}/json?token=fdc5faa922a0b1`
+                            const req_loc_ip = await fetch(url);
+                            var location = await req_loc_ip.json();
+                            console.log(location)
+                            if (location) {
+                                let region = location.region.toLowerCase();
+                                switch (region) {
+                                    case "sindh": $("input[value='SEQS_']").trigger("click"); break;
+                                    case "punjab": $("input[value='PEQS_']").trigger("click"); break;
+                                    case "kpk": $("input[value='NEQS_']").trigger("click"); break;
+                                }
+                                setTimeout(function(){
+                                    $("#loc_err").hide()
+                                },1000)
+                              
+                            }
+                        }
+                    })
+                </script>
+<script src={% static '/js/app.js'%} defer >
+    
+    
+</script>
+</body>
+</html>
